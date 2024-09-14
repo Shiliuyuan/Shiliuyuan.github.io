@@ -1,0 +1,440 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <link href="https://shiliuyuan.github.io/css/prism.css" rel="stylesheet" />
+    <script src="https://shiliuyuan.github.io/js/prism.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+    <title>通用Makefile文件编写 - 十六源</title>
+    <meta name="keywords" content="十六源,独立,博客,程序员,个人,思考,读书,笔记,技术,分享,python,Golang">
+    
+    <meta property="og:title" content="通用Makefile文件编写">
+    <meta property="og:site_name" content="十六源">
+    <meta property="og:image" content="/img/author.jpg"> 
+    <meta name="title" content="通用Makefile文件编写 - 十六源" />
+    <meta name="description" content="十六源 | 博客 | 软件 | python | C"> 
+    <link rel="shortcut icon" href="https://shiliuyuan.github.io/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="https://shiliuyuan.github.io/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="https://shiliuyuan.github.io/img/apple-touch-icon.png" />
+    <link href="https://shiliuyuan.github.io/js/vendor/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+    <link href="https://shiliuyuan.github.io/js/vendor/fancybox/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+    <link href="https://shiliuyuan.github.io/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="https://shiliuyuan.github.io/css/syntax.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+     fancybox: true, 
+    motion: true
+  };
+</script>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<div class="container one-collumn sidebar-position-left page-home  ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-meta  custom-logo ">
+
+  <div class="custom-logo-site-title">
+    <a href="https://shiliuyuan.github.io/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">十六源</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">逢山开路，遇水搭桥</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+      
+      
+        <li class="menu-item ">
+          <a href="https://shiliuyuan.github.io/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://shiliuyuan.github.io/post/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://shiliuyuan.github.io/about/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于
+          </a>
+        </li>
+      
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger"> <i class="menu-item-icon fa fa-search fa-fw"></i> <br /> 搜索</a>
+      </li>
+    </ul>
+    <div class="site-search">
+      <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+    </div>
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+<section id="posts" class="posts-expand">
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link" href="https://shiliuyuan.github.io/post/technology/2024/2024-09-06-%E9%80%9A%E7%94%A8makefile%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99/" itemprop="url">
+        通用Makefile文件编写
+        </a>
+      </h1>
+      <div class="post-meta">
+      <span class="post-time">
+<span class="post-meta-item-icon">
+    <i class="fa fa-calendar-o"></i>
+</span>
+<span class="post-meta-item-text">时间：</span>
+<time itemprop="dateCreated" datetime="2016-03-22T13:04:35+08:00" content="2024-09-06">
+    2024-09-06
+</time>
+</span> 
+      
+
+  <span class="post-category" >
+  &nbsp; | &nbsp;
+  <span class="post-meta-item-icon">
+    <i class="fa fa-folder-o"></i>
+  </span>
+  <span class="post-meta-item-text">分类：</span>
+  
+    <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+      <a href="https://shiliuyuan.github.io/categories/%E6%9D%82%E8%AE%B0" itemprop="url" rel="index">
+        <span itemprop="name">杂记</span>
+      </a>
+      &nbsp; 
+    </span>
+  
+</span>
+
+
+       <span>
+&nbsp; | &nbsp;
+<span class="post-meta-item-icon">
+    <i class="fa fa-eye"></i>
+</span>
+<span class="post-meta-item-text">阅读：</span>
+<span class="leancloud-visitors-count">898 字 ~2分钟</span>
+</span>
+      
+      </div>
+    </header>
+    <div class="post-body" itemprop="articleBody">
+    <p>在学习嵌入式C语言的过程中，往往使用source insight之类的文本编辑工具编辑代码，再使用makefile进行编译，此时对于多级目录的情况，查阅资料发现网上很少有清晰的教程来写一份清晰的makefile问题，因此总结作为记录。备注：此makefile文件可以嵌入vscode进行使用。</p>
+<p>Makefile的通用文件设计思路采用了逻辑与配置分离的思想，其编译主要逻辑存放于Makefile文件中，配置路径相关问题存放于makefile.defines.mk文件中。每次新增含有头文件的文件夹和.c文件时，Makefile文件本身的逻辑部分无需变动，只需在makefile.defines.mk文件中添加相应内容即可。</p>
+<p>现有一项目路径如下：</p>
+<pre><code class="language-bash">└── src
+    ├── LinkList
+    │   ├── linklist.c
+    │   └── linklist.h
+    ├── main.c
+</code></pre>
+<p>则配置makefile.defines.mk文件如下：</p>
+<pre><code class="language-makefile">Target = target    #生成目标文件名称
+BINPATH = bin	   #目标文件存放目录
+SRCPATH = src      #源文件存放目录
+OBJPATH = obj	   #编译过程文件存放目录
+
+ADDSOURCE = 
+ADDINCLUDE = 
+ADDINCLUDE += src				#注意等号右边的空格不能少
+ADDINCLUDE += src/LinkList
+
+ADDSOURCE += src/main.c
+ADDSOURCE += src/LinkList/linklist.c
+</code></pre>
+<p>当新增目录或.c文件时候，是需要在ADDINCLUDE和ADDSOURCE中添加对应路径即可。</p>
+<p>下面来介绍Makefile逻辑部分（只实现了最基础的功能，供学习使用，后续可以在上面增加其它Makefile功能）</p>
+<pre><code class="language-makefile">.DEFAULT_GOAL := default					#设置默认编译指令即Makefile时候运行的目标
+.PHONY : default build-debug				#伪目标，防止与文件名冲突
+default:all									#默认执行all目标
+all:build run
+build-debug:build
+
+ADDINCLUDE_U := $(addprefix -I, $(ADDINCLUDE))			#展开头文件目录，并在上面添加-I
+CC := gcc												#编译器
+CFLAGS := -g -Wunused-variable $(ADDINCLUDE_U)			#编译指令
+DEPNEDFLAGS := -MM -MP -MT -nostdinc $(ADDINCLUDE_U) 	#生成.o文件编译指令
+OBJFILES := $(patsubst %.c,%.o,$(patsubst $(SRCPATH)/%,$(OBJPATH)/%,$(ADDSOURCE)))		#替换.c为.o作为目标文件
+OBJPATHS := $(dir $(OBJFILES))															#判断.c文件存放的目录有哪些
+.PHONY : build
+build:$(Target)
+$(Target): $(OBJFILES) $(dir $(OBJFILES))/.dirstamp $(BINPATH)/.dirstamp	#链接.o文件调用创建目录指令
+	@$(CC) $(CFLAGS) $(OBJFILES) -o $(BINPATH)/$@							#链接.o文件
+.SECONDEXPANSION:
+$(OBJPATH)/%.o:$(SRCPATH)/%.c $$(dir $(OBJPATH)/%).dirstamp					#将所有的.c文件生成.o文件，放在对应的文件夹内
+	@$(CC) $(DEPNEDFLAGS) $&lt; -MF $(@:.o=.d)									#生成.d文件，存放每个文件依赖的头文件
+	@$(CC) $(CFLAGS) -c $&lt; -o $@											#生成.o文件
+
+%.dirstamp:
+	@mkdir -p $(@D)
+.PHONY : run clean
+run: $(BINPATH)/$(Target)													#运行可执行文件
+	@./$&lt;
+clean:																		#清除创建的文件夹
+	@rm -rf $(OBJPATH) $(BINPATH)
+</code></pre>
+<p>以上为一个简易的通用Makefile框架，可以在服务器或者嵌入式领域的集成开发环境有限的情况下，做简易的学习开发使用。</p>
+    </div>
+    <footer class="post-footer">
+     
+ 
+<div class="post-tags">     
+     
+    <a href="https://shiliuyuan.github.io/tags/%e5%b7%a5%e5%85%b7" rel="tag" title="工具">#工具#</a>
+    
+</div>
+
+
+
+     <div class="post-nav">
+    <div class="post-nav-next post-nav-item">
+    
+        <a href="https://shiliuyuan.github.io/post/technology/2024/2024-09-07-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%A1%BA%E5%BA%8F%E8%A1%A8/" rel="next" title="从零开始玩转数据结构——顺序表">
+        <i class="fa fa-chevron-left"></i> 从零开始玩转数据结构——顺序表
+        </a>
+    
+    </div>
+
+    <div class="post-nav-prev post-nav-item">
+    
+        <a href="https://shiliuyuan.github.io/post/technology/2022/2022-07-04-%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%8D%8F%E7%A8%8B/" rel="prev" title="进程、线程和协程">
+        进程、线程和协程 <i class="fa fa-chevron-right"></i>
+        </a>
+    
+    </div>
+</div>
+      
+     
+     
+     
+
+
+
+
+     <div class="post-nav">
+<div style="border: 1px dashed #e0e0e0; padding: 10px 10px 10px 10px; background-color: #fffeee; background-repeat: no-repeat; background-attachment: scroll; background-position: 1% 50%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+    <div style="float:left;margin-top:0px;">
+    <img src="https://shiliuyuan.github.io/img/qrcode/qrcode_8cm.jpg" width="129px" height="129px"/>
+    <div style="text-align:center;">微信扫一扫交流</div>
+    </div>
+    <div>
+        <p style="margin-top:0px;">
+            标题：通用Makefile文件编写
+        <br />作者：<a target="_blank" href="https://shiliuyuan.github.io/">十六源</a>
+        <br />QQ ：3320065001
+        <br />声明：自由转载-非商用-非衍生-保持署名（创作共享3.0许可证）
+        </p>
+    </div>
+</div>
+<div class="clear"></div>
+</div>
+    </footer>
+  </article>
+</section>
+
+          </div>
+        </div>
+        <div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+        src="https://shiliuyuan.github.io/img/author.jpg"
+        alt="" />
+    <p class="site-author-name" itemprop="name"></p>
+    <p class="site-description motion-element" itemprop="description"> 
+        AI &amp; BMS</p>
+</div>
+      <nav class="site-state motion-element">
+    <div class="site-state-item site-state-posts">
+      <a href="https://shiliuyuan.github.io/post/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">日志</span>
+      </a>
+    </div>
+    <div class="site-state-item site-state-categories">    
+        <a href="https://shiliuyuan.github.io/categories/">      
+         
+        <span class="site-state-item-count">2</span>
+        
+        <span class="site-state-item-name">分类</span>
+        
+        </a>
+    </div>
+
+    <div class="site-state-item site-state-tags">
+        <a href="https://shiliuyuan.github.io/tags/">
+         
+        <span class="site-state-item-count">5</span>
+        
+        <span class="site-state-item-name">标签</span>
+        </a>
+    </div>
+</nav>
+      
+      
+<div class="links-of-author motion-element">
+    
+        <span class="links-of-author-item">
+        <a href="https://github.com/shiliuyuan/" target="_blank" title="GitHub">
+            <i class="fa fa-fw fa-github"></i>
+            GitHub
+        </a>
+        </span>
+    
+        <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/shiliuyuan-43" target="_blank" title="知乎">
+            <i class="fa fa-fw fa-globe"></i>
+            知乎
+        </a>
+        </span>
+    
+</div>
+
+
+      
+    <div class="links-of-blogroll motion-element inline">
+    <div class="links-of-blogroll-title">
+        <i class="fa fa-fw fa-globe"></i>
+        友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        
+        <li class="links-of-blogroll-item">
+            <a href="https://abcdhope.github.io/docsify-abcdhope" title="abcdhope" target="_blank">abcdhope</a>
+        </li>
+        
+        <li class="links-of-blogroll-item">
+            <a href="https://abcdhope.github.io/docsify-abcdhope1" title="abcdhope1" target="_blank">abcdhope1</a>
+        </li>
+        
+    </ul>
+    </div>
+
+
+      <div class="links-of-blogroll motion-element inline">
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/8.js?i=5pdhpgkshgi&amp;m=0&amp;s=220&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=33&amp;bv=35" async="async"></script>
+</div>
+
+    </section>
+    
+  </div>
+</aside>
+
+      </div>
+    </main>
+   
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="powered-by">
+    Powered by - <a class="theme-link" href="http://gohugo.io" target="_blank" title="hugo" >Hugo v0.134.1</a>
+</div>
+<div class="theme-info">
+    Theme by - <a class="theme-link" href="https://github.com/xtfly/hugo-theme-next" target="_blank"> NexT
+    </a>
+</div>
+<div class="copyright" >
+    <span class="copyright-Year">  &copy; 
+    2022 - 2024</span>
+    <span class="with-love"><i class="fa fa-heart"></i></span>
+    <span class="author" itemprop="copyrightHolder">十六源</span>
+    <p>
+    <span class="icp">
+        <a class="icp" target="_blank" href="https://beian.miit.gov.cn/">豫ICP备2024089458</a>
+    </span>
+    </p>
+</div>
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      <span id="scrollpercent"><span>0</span>%</span>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/fastclick/lib/fastclick.min.js?v=1.0.6"></script> 
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/velocity/velocity.min.js?v=1.2.1"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/plantuml/rawdeflate.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/plantuml/jquery_plantuml.js"></script>
+<script src="https://shiliuyuan.github.io/js/vendor/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+
+<script src="https://shiliuyuan.github.io/js/vendor/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/utils.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/motion.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/affix.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/schemes/pisces.js"></script>
+
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/scrollspy.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/post-details.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/toc.js"></script>
+
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+</body>
+</html>

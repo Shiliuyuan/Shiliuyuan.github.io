@@ -1,0 +1,926 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <link href="https://shiliuyuan.github.io/css/prism.css" rel="stylesheet" />
+    <script src="https://shiliuyuan.github.io/js/prism.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> 
+    <title>从零开始玩转数据结构——顺序表 - 十六源</title>
+    <meta name="keywords" content="十六源,独立,博客,程序员,个人,思考,读书,笔记,技术,分享,python,Golang">
+    
+    <meta property="og:title" content="从零开始玩转数据结构——顺序表">
+    <meta property="og:site_name" content="十六源">
+    <meta property="og:image" content="/img/author.jpg"> 
+    <meta name="title" content="从零开始玩转数据结构——顺序表 - 十六源" />
+    <meta name="description" content="十六源 | 博客 | 软件 | python | C"> 
+    <link rel="shortcut icon" href="https://shiliuyuan.github.io/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="https://shiliuyuan.github.io/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="https://shiliuyuan.github.io/img/apple-touch-icon.png" />
+    <link href="https://shiliuyuan.github.io/js/vendor/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+    <link href="https://shiliuyuan.github.io/js/vendor/fancybox/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+    <link href="https://shiliuyuan.github.io/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="https://shiliuyuan.github.io/css/syntax.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+     fancybox: true, 
+    motion: true
+  };
+</script>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<div class="container one-collumn sidebar-position-left page-home  ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-meta  custom-logo ">
+
+  <div class="custom-logo-site-title">
+    <a href="https://shiliuyuan.github.io/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">十六源</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">逢山开路，遇水搭桥</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+      
+      
+        <li class="menu-item ">
+          <a href="https://shiliuyuan.github.io/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://shiliuyuan.github.io/post/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档
+          </a>
+        </li>
+      
+        <li class="menu-item ">
+          <a href="https://shiliuyuan.github.io/about/" rel="section">
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于
+          </a>
+        </li>
+      
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger"> <i class="menu-item-icon fa fa-search fa-fw"></i> <br /> 搜索</a>
+      </li>
+    </ul>
+    <div class="site-search">
+      <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+    </div>
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+<section id="posts" class="posts-expand">
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link" href="https://shiliuyuan.github.io/post/technology/2024/2024-09-07-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%A1%BA%E5%BA%8F%E8%A1%A8/" itemprop="url">
+        从零开始玩转数据结构——顺序表
+        </a>
+      </h1>
+      <div class="post-meta">
+      <span class="post-time">
+<span class="post-meta-item-icon">
+    <i class="fa fa-calendar-o"></i>
+</span>
+<span class="post-meta-item-text">时间：</span>
+<time itemprop="dateCreated" datetime="2016-03-22T13:04:35+08:00" content="2024-09-07">
+    2024-09-07
+</time>
+</span> 
+      
+
+  <span class="post-category" >
+  &nbsp; | &nbsp;
+  <span class="post-meta-item-icon">
+    <i class="fa fa-folder-o"></i>
+  </span>
+  <span class="post-meta-item-text">分类：</span>
+  
+    <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+      <a href="https://shiliuyuan.github.io/categories/%E6%8A%80%E6%9C%AF" itemprop="url" rel="index">
+        <span itemprop="name">技术</span>
+      </a>
+      &nbsp; 
+    </span>
+  
+</span>
+
+
+       <span>
+&nbsp; | &nbsp;
+<span class="post-meta-item-icon">
+    <i class="fa fa-eye"></i>
+</span>
+<span class="post-meta-item-text">阅读：</span>
+<span class="leancloud-visitors-count">1933 字 ~4分钟</span>
+</span>
+      
+      </div>
+    </header>
+    <div class="post-body" itemprop="articleBody">
+    <p>大家好，本系列文章将记录博主关于数据结构（C语言实现版）的开发学习之旅，其中包括但不限于用顺序表、栈、队列、树的理论分析和实现。欢迎各位评论交流、相互学习！</p>
+<h3 id="线性表简介">线性表简介</h3>
+<p>线性表是最简单的一种数据结构，也是其它线性结构如栈、队列的基础。</p>
+<h3 id="线性表的存储方式">线性表的存储方式</h3>
+<p>线性表的存储结构分为顺序存储和链式存储。其中顺序存储结构查找和修改效率较高，但其插入和删除效率在大多数情况下不如链式存储结构。</p>
+<h3 id="线性表的实现及操作">线性表的实现及操作</h3>
+<ol>
+<li>构造线性表</li>
+<li>判断线性表是否为空</li>
+<li>判断线性表是否已满</li>
+<li>向线性表中插入数据
+<ol>
+<li>头插</li>
+<li>尾插</li>
+<li>指定位置插入（包含头插和尾插）</li>
+</ol>
+</li>
+<li>从线性表中取出（删除）元素
+<ol>
+<li>尾部取出</li>
+<li>指定位置取出</li>
+</ol>
+</li>
+<li>查询线性表中指定位置的元素</li>
+<li>修改线性表中指定位置的元素</li>
+<li>清空线性表</li>
+<li>打印线性表</li>
+</ol>
+<h3 id="线性表的实现-顺序存储">线性表的实现-顺序存储</h3>
+<p>顾名思义，顺序存储的线性表在内存中所使用的空间是连续的，因此相较于链式存储，其占用内存更少，多用于数据查询比较频繁或者内存有限的场景。</p>
+<p>在设计实现前，首先要规划实现方案，我个人比较喜欢参数和逻辑进行分离，且头文件的导入都在.c文件中实现的思路。那就先定义配置文件<strong>Define.h</strong>如下：</p>
+<pre><code class="language-c">#ifndef __DEFINE__
+#define __DEFINE__
+#include&lt;stdlib.h&gt;
+#include&lt;stdio.h&gt;
+#include &lt;stdbool.h&gt;
+// 最大长度，暂时可复用在各种数据结构的学习中
+#define MAXSIZE 10
+typedef int datatype;	//重定义数据数据类型，方便直接切换数据表的数据类型
+#endif
+</code></pre>
+<p>然后定义线性表的逻辑实现，这里先实现<strong>顺序存储</strong>的线性表，其头文件<strong>seqlist.h</strong>定义如下：</p>
+<pre><code class="language-c">#ifndef __SEQLIST__
+#define __SEQLIST__
+#include &quot;Define.h&quot;
+typedef int data_t;
+typedef struct Test
+{
+    /* data */
+    data_t data[MAXSIZE];
+    int last;
+}seqlist_t, *seqlink_t;
+// 创建
+extern seqlist_t *create_seqlist(void);
+// 获取长度
+extern int get_length_seqlist(seqlist_t *L);
+// 判空
+extern int is_empty_seqlist(seqlist_t *L);
+// 判满
+extern int is_full_seqlist(seqlist_t *L);
+// 插入数据
+extern int insert_seqlist(seqlist_t *L, data_t x, int pos);
+// 删除数据
+extern int delete_seqlist(seqlist_t *L,int pos);
+// 修改指定位置的数据
+extern int change_seqlist(seqlist_t *L,data_t x, int pos);
+// 查
+extern int search_seqlist(seqlist_t *L, data_t x);
+// 清空（释放顺序表）
+extern void clear_seqlist(seqlist_t *L);
+// 置空（顺序表中所有元素置为0）
+extern void set_empty_seqlist(seqlist_t *L);
+// 打印线性表
+extern void show_seqlist(seqlist_t *L);
+#endif
+</code></pre>
+<p>然后在<strong>seqlist.c</strong>依次实现头文件中定义的函数如下：</p>
+<pre><code class="language-C">#include&quot;seqlist.h&quot;
+// 创建
+seqlist_t *create_seqlist(void)
+{
+    seqlist_t *L=NULL;
+    L = (seqlist_t *)malloc(sizeof(seqlist_t));
+    if(L==NULL)
+    {
+        puts(&quot;no memory&quot;);
+        L = NULL;
+    }
+    L-&gt;last = -1;
+    return L;
+}
+// 获取长度
+int get_length_seqlist(seqlist_t *L)
+{
+    int Temp;
+    if(L==NULL)
+    {
+        puts(&quot;seqlist_t *L is NULL&quot;);
+        Temp = -1;
+    }else
+    {
+        Temp = L-&gt;last + 1;
+    }
+    return Temp;
+}
+// 判空
+int is_empty_seqlist(seqlist_t *L)
+{
+    int Temp;
+    if(L==NULL)
+    {
+        puts(&quot;seqlist_t *L is NULL&quot;);
+        Temp = -1;
+    }else
+    {
+        Temp = (L-&gt;last == -1);
+    }
+    return Temp;
+}
+// 判满
+int is_full_seqlist(seqlist_t *L)
+{
+    int Temp;
+    if(L==NULL)
+    {
+        puts(&quot;seqlist_t *L is NULL&quot;);
+        Temp = -1;
+    }else
+    {
+        Temp = (L-&gt;last == MAXSIZE - 1);
+    }
+    return Temp;
+}
+// 增
+int insert_seqlist(seqlist_t *L, data_t x, int pos)
+{
+    int Temp = 0;
+    int i = 0;
+    if(L==NULL)
+    {
+        puts(&quot;seqlist_t *L is NULL&quot;);
+        Temp = -1;
+    }else if ((is_full_seqlist(L)) || (pos &lt; 0) || (pos &gt; L-&gt;last + 1))
+    {
+        puts(&quot;input argv is invalid&quot;);
+        Temp = -1;
+    }else
+    {
+        for(i=L-&gt;last; i &gt;=pos; i--)
+        {
+            L-&gt;data[i+1]=L-&gt;data[i];
+        }
+        L-&gt;data[pos] = x;
+        L-&gt;last++;
+        Temp = 1;
+    }
+    return Temp;
+    
+}
+// 删
+int delete_seqlist(seqlist_t *L,int pos)
+{
+    int Temp = 0;
+    int i = 0;
+    if(L==NULL)
+    {
+        puts(&quot;seqlist_t *L is NULL&quot;);
+        Temp = -1;
+    }else if (pos &lt; 0 || pos &gt; L-&gt;last)
+    {
+        puts(&quot;input argv is invalid&quot;);
+        Temp = -1;
+    }
+    
+    else
+    {
+        for(i=pos; i&lt;=L-&gt;last;i++)
+        {
+            L-&gt;data[i] = L-&gt;data[i+1];
+        }
+        Temp = 1;
+    }
+
+    L-&gt;last--;
+    return Temp;
+}
+// 改
+int change_seqlist(seqlist_t *L,data_t x, int pos)
+{
+    int Temp = 0;
+    if(L==NULL)
+    {
+        puts(&quot;seqlist_t *L is NULL&quot;);
+        Temp = -1;
+    }else if ((pos &lt; 0) || (pos &gt; L-&gt;last + 1))
+    {
+        puts(&quot;input argv is invalid&quot;);
+        Temp = -1;
+    }else
+    {
+        L-&gt;data[pos] = x;
+        Temp = 1;
+    }
+    return Temp;
+}
+// 查
+int search_seqlist(seqlist_t *L, data_t x)
+{
+    int Temp = 0;
+    int i = 0;
+    if(L==NULL)
+    {
+        puts(&quot;seqlist_t *L is NULL&quot;);
+        Temp = -1;
+    }else
+    {
+        for(i=0; i&lt;=L-&gt;last;i++)
+        {
+            if((L-&gt;data[i]==x)&amp;&amp;(Temp!=i))
+            {
+                Temp = i;
+            }
+        }
+    }
+    return Temp;
+}
+// 清空
+void clear_seqlist(seqlist_t *L)
+{
+    if(L==NULL)
+    {
+        puts(&quot;seqlist_t *L is NULL&quot;);
+    }else
+    {
+        set_empty_seqlist(L);
+        free(L);
+        L=NULL;
+    }
+}
+// 置空
+void set_empty_seqlist(seqlist_t *L)
+{
+    if(L==NULL)
+    {
+        puts(&quot;seqlist_t *L is NULL&quot;);
+    }else
+    {
+        L-&gt;last = -1;
+    }
+}
+// 展示序列
+void show_seqlist(seqlist_t *L)
+{
+    int i = 0;
+    if(L==NULL)
+    {
+        puts(&quot;seqlist_t *L is NULL&quot;);
+    }else
+    {
+        for(i=0;i&lt;=L-&gt;last;i++)
+        {
+            printf(&quot;L-&gt;data[%d]=%d\n&quot;,i,L-&gt;data[i]);
+        }
+    }
+}
+</code></pre>
+<h3 id="线性表的实现-链式存储">线性表的实现-链式存储</h3>
+<p>前面已经对线性表的顺序存储的创建和操作做了一些总结，接下来介绍另一种采用更加灵活的存储方式的线性表，链式存储的顺序表。</p>
+<p>同样的采用线性存储时候使用的配置文件<strong>Define.h</strong>，这里不做重复说明。接下来定义链式存储的头文件<strong>linklist.h</strong>。</p>
+<pre><code class="language-C">#ifndef _LINKLIST_H_
+#define _LINKLIST_H_
+#include &quot;Define.h&quot;
+typedef struct node
+{
+    datatype data;
+    struct node * next;
+}listnode, *linklist;
+// 链式表的创建
+extern linklist list_create();
+// 通过输入键盘创建链表
+extern linklist list_create_from_key();
+// 头插元素
+extern int list_head_insert(linklist H, datatype value);
+// 按指定位置插入元素
+extern int list_insert(linklist H, int pos, datatype value);
+// 查询指定位置的元素
+extern linklist list_get(linklist H, int pos);
+// 查询指定元素的位置
+extern linklist list_locate(linklist H, datatype value);
+// 删除指定位置的元素
+extern int list_delete(linklist H, int pos);
+// 翻转链表
+extern void list_reverse(linklist H);
+// 在顺序表中按顺序插入元素
+extern int list_order_insert(linklist H, datatype value);
+// 排序链表
+extern void list_sort(linklist H);
+// 打印链表
+extern void list_show(linklist H);
+#endif
+</code></pre>
+<p>下面来实现每一个函数</p>
+<pre><code class="language-C">#include&quot;linklist.h&quot;
+#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+linklist list_create()
+{
+    linklist H;
+    if((H=(linklist)malloc(sizeof(listnode)))==NULL)
+    {
+        printf(&quot;malloc failedd\n&quot;);
+        return H;
+    }
+    H-&gt;data = 0;
+    H-&gt;next = NULL;
+    return H;
+}
+
+void list_show(linklist H)
+{
+    while (H-&gt;next!=NULL)
+    {
+        printf(&quot;%d &quot;, H-&gt;next-&gt;data);
+        H = H-&gt;next;
+    }
+    printf(&quot;打印完成\n&quot;);
+}
+
+int list_head_insert(linklist H, datatype value)
+{
+    linklist p;
+    if((p=(linklist)malloc(sizeof(listnode)))==NULL)
+    {
+        printf(&quot;malloc failedd\n&quot;);
+        return -1;
+    }
+    p-&gt;data = value;
+    p-&gt;next = H-&gt;next;
+    H-&gt;next = p;
+    return 0;
+}
+
+linklist list_create_from_key()
+{
+    linklist H, r, p;
+    datatype value;
+    if((H=(linklist)malloc(sizeof(listnode)))==NULL)
+    {
+        printf(&quot;malloc failedd\n&quot;);
+        return H;
+    }
+    H-&gt;data = 0;
+    H-&gt;next = NULL;
+    r = H;
+    while (1)
+    {
+        printf(&quot;input a value(-1 exit):&quot;);
+        scanf(&quot;%d&quot;, &amp;value);
+        if(value == -1)
+        {
+            break;
+        }
+        if((p=(linklist)malloc(sizeof(listnode)))==NULL)
+        {
+            printf(&quot;malloc failedd\n&quot;);
+            return H;
+        }
+        p-&gt;data = value;
+        p-&gt;next = NULL;
+        r-&gt;next = p;
+        r = p;
+    }
+    return H;
+}
+
+linklist list_get(linklist H, int pos)
+{
+    linklist p = H;
+    int i = -1;
+    if(pos &lt; 0)
+    {
+        printf(&quot;position is vaild\n&quot;);
+        return NULL;
+    }
+    while (p-&gt;next &amp;&amp; i &lt; pos)
+    {
+        p = p-&gt;next;
+        i++;
+    }
+    if(i == pos)
+    {
+        return p;
+    }else
+    {
+        printf(&quot;position is vaild\n&quot;);
+        return NULL;
+    }
+    
+}
+linklist list_locate(linklist H, datatype value)
+{
+    linklist p = H-&gt;next;
+    while (p &amp;&amp; p-&gt;data != value)
+    {
+        p = p-&gt;next;
+    }
+    return p;
+    
+}
+int list_insert(linklist H, int pos, datatype value)
+{
+    linklist p, q;
+    if(pos == 0)
+    {
+        p = H;
+    }
+    else
+    {
+        p = list_get(H, pos-1);
+    }
+    if(p == NULL)
+    {
+        printf(&quot;para is invaild\n&quot;);
+        return -1;
+    }else
+    {
+        if((q = (linklist)malloc(sizeof(listnode))) == NULL)
+        {
+            printf(&quot;malloc faild\n&quot;);
+            return -1;
+        }
+        q-&gt;data = value;
+        q-&gt;next = p-&gt;next;
+        p-&gt;next = q;
+        return 0;
+    }
+}
+
+int list_delete(linklist H, int pos)
+{
+    linklist p,q;
+    if(pos == 0)
+    {
+        p = H;
+    }
+    else
+    {
+        p = list_get(H, pos-1);
+    }
+    if((p==NULL)||(p-&gt;next==NULL))
+    {
+        printf(&quot;Para is Vaild\n&quot;);
+        return -1;
+    }else
+    {
+        q = p-&gt;next;
+        p-&gt;next = q-&gt;next;
+        free(q);
+        q = NULL;
+        return 0;
+    }
+}
+
+void list_reverse(linklist H)
+{
+    linklist p, q;
+    p = H-&gt;next;
+    H-&gt;next = NULL;
+    while (p!=NULL)
+    {
+        q = p;
+        p = p-&gt;next;
+        q-&gt;next = H-&gt;next;
+        H-&gt;next = q;
+    }
+}
+
+int list_order_insert(linklist H, datatype value)
+{
+    linklist p, q;
+    if((p = (linklist)malloc(sizeof(listnode))) == NULL)
+    {
+        printf(&quot;malloc faild\n&quot;);
+        return -1;
+    }
+    p-&gt;data = value;
+    q = H;
+    while ((q-&gt;next!=NULL)&amp;&amp;(q-&gt;next-&gt;data &lt; value))
+    {
+        q = q-&gt;next;
+    }
+    p-&gt;next = q-&gt;next;
+    q-&gt;next = p;
+    return 0;
+}
+void list_sort(linklist H)
+{
+    linklist p;
+    p = H-&gt;next;
+    H-&gt;next = NULL;
+    while (p!=NULL)
+    {
+        list_order_insert(H, p-&gt;data);
+        p = p-&gt;next;
+    }
+}
+</code></pre>
+<h3 id="总结">总结</h3>
+<p>通过对顺序表的初步学习，能够更好的了解数据的存储方式和数据的操作，对其他数据结构的学习帮助较大。</p>
+    </div>
+    <footer class="post-footer">
+     
+ 
+<div class="post-tags">     
+     
+    <a href="https://shiliuyuan.github.io/tags/%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84" rel="tag" title="数据结构">#数据结构#</a>
+    
+</div>
+
+
+
+     <div class="post-nav">
+    <div class="post-nav-next post-nav-item">
+    
+        <a href="https://shiliuyuan.github.io/post/technology/2024/2024-09-11-git%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%80%BB%E7%BB%93/" rel="next" title="Git工作流总结">
+        <i class="fa fa-chevron-left"></i> Git工作流总结
+        </a>
+    
+    </div>
+
+    <div class="post-nav-prev post-nav-item">
+    
+        <a href="https://shiliuyuan.github.io/post/technology/2024/2024-09-06-%E9%80%9A%E7%94%A8makefile%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99/" rel="prev" title="通用Makefile文件编写">
+        通用Makefile文件编写 <i class="fa fa-chevron-right"></i>
+        </a>
+    
+    </div>
+</div>
+      
+     
+     
+     
+
+
+
+
+     <div class="post-nav">
+<div style="border: 1px dashed #e0e0e0; padding: 10px 10px 10px 10px; background-color: #fffeee; background-repeat: no-repeat; background-attachment: scroll; background-position: 1% 50%; -moz-background-size: auto auto; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+    <div style="float:left;margin-top:0px;">
+    <img src="https://shiliuyuan.github.io/img/qrcode/qrcode_8cm.jpg" width="129px" height="129px"/>
+    <div style="text-align:center;">微信扫一扫交流</div>
+    </div>
+    <div>
+        <p style="margin-top:0px;">
+            标题：从零开始玩转数据结构——顺序表
+        <br />作者：<a target="_blank" href="https://shiliuyuan.github.io/">十六源</a>
+        <br />QQ ：3320065001
+        <br />声明：自由转载-非商用-非衍生-保持署名（创作共享3.0许可证）
+        </p>
+    </div>
+</div>
+<div class="clear"></div>
+</div>
+    </footer>
+  </article>
+</section>
+
+          </div>
+        </div>
+        <div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+  <ul class="sidebar-nav motion-element">
+    <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+      文章目录
+    </li>
+    <li class="sidebar-nav-overview" data-target="site-overview">
+      站点概览
+    </li>
+  </ul>
+
+    <section class="site-overview sidebar-panel ">
+      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+        src="https://shiliuyuan.github.io/img/author.jpg"
+        alt="" />
+    <p class="site-author-name" itemprop="name"></p>
+    <p class="site-description motion-element" itemprop="description"> 
+        AI &amp; BMS</p>
+</div>
+      <nav class="site-state motion-element">
+    <div class="site-state-item site-state-posts">
+      <a href="https://shiliuyuan.github.io/post/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">日志</span>
+      </a>
+    </div>
+    <div class="site-state-item site-state-categories">    
+        <a href="https://shiliuyuan.github.io/categories/">      
+         
+        <span class="site-state-item-count">2</span>
+        
+        <span class="site-state-item-name">分类</span>
+        
+        </a>
+    </div>
+
+    <div class="site-state-item site-state-tags">
+        <a href="https://shiliuyuan.github.io/tags/">
+         
+        <span class="site-state-item-count">5</span>
+        
+        <span class="site-state-item-name">标签</span>
+        </a>
+    </div>
+</nav>
+      
+      
+<div class="links-of-author motion-element">
+    
+        <span class="links-of-author-item">
+        <a href="https://github.com/shiliuyuan/" target="_blank" title="GitHub">
+            <i class="fa fa-fw fa-github"></i>
+            GitHub
+        </a>
+        </span>
+    
+        <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/shiliuyuan-43" target="_blank" title="知乎">
+            <i class="fa fa-fw fa-globe"></i>
+            知乎
+        </a>
+        </span>
+    
+</div>
+
+
+      
+    <div class="links-of-blogroll motion-element inline">
+    <div class="links-of-blogroll-title">
+        <i class="fa fa-fw fa-globe"></i>
+        友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        
+        <li class="links-of-blogroll-item">
+            <a href="https://abcdhope.github.io/docsify-abcdhope" title="abcdhope" target="_blank">abcdhope</a>
+        </li>
+        
+        <li class="links-of-blogroll-item">
+            <a href="https://abcdhope.github.io/docsify-abcdhope1" title="abcdhope1" target="_blank">abcdhope1</a>
+        </li>
+        
+    </ul>
+    </div>
+
+
+      <div class="links-of-blogroll motion-element inline">
+<script type="text/javascript" src="//rf.revolvermaps.com/0/0/8.js?i=5pdhpgkshgi&amp;m=0&amp;s=220&amp;c=ff0000&amp;cr1=ffffff&amp;f=arial&amp;l=33&amp;bv=35" async="async"></script>
+</div>
+
+    </section>
+    
+<section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+    <div class="post-toc">
+        <div class="post-toc-content"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#线性表简介">线性表简介</a></li>
+            <li><a href="#线性表的存储方式">线性表的存储方式</a></li>
+            <li><a href="#线性表的实现及操作">线性表的实现及操作</a></li>
+            <li><a href="#线性表的实现-顺序存储">线性表的实现-顺序存储</a></li>
+            <li><a href="#线性表的实现-链式存储">线性表的实现-链式存储</a></li>
+            <li><a href="#总结">总结</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+    </div>
+</section>
+
+  </div>
+</aside>
+
+      </div>
+    </main>
+   
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="powered-by">
+    Powered by - <a class="theme-link" href="http://gohugo.io" target="_blank" title="hugo" >Hugo v0.134.1</a>
+</div>
+<div class="theme-info">
+    Theme by - <a class="theme-link" href="https://github.com/xtfly/hugo-theme-next" target="_blank"> NexT
+    </a>
+</div>
+<div class="copyright" >
+    <span class="copyright-Year">  &copy; 
+    2022 - 2024</span>
+    <span class="with-love"><i class="fa fa-heart"></i></span>
+    <span class="author" itemprop="copyrightHolder">十六源</span>
+    <p>
+    <span class="icp">
+        <a class="icp" target="_blank" href="https://beian.miit.gov.cn/">豫ICP备2024089458</a>
+    </span>
+    </p>
+</div>
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+      <span id="scrollpercent"><span>0</span>%</span>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/jquery/index.js?v=2.1.3"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/fastclick/lib/fastclick.min.js?v=1.0.6"></script> 
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/velocity/velocity.min.js?v=1.2.1"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/plantuml/rawdeflate.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/vendor/plantuml/jquery_plantuml.js"></script>
+<script src="https://shiliuyuan.github.io/js/vendor/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+
+<script src="https://shiliuyuan.github.io/js/vendor/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/utils.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/motion.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/affix.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/schemes/pisces.js"></script>
+
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/scrollspy.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/post-details.js"></script>
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/toc.js"></script>
+
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/bootstrap.js"></script>
+
+<script type="text/javascript" src="https://shiliuyuan.github.io/js/search.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { fonts: ["TeX"] }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML' async></script>
+</body>
+</html>

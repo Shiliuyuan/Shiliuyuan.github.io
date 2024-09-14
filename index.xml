@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>十六源</title>
+    <link>https://shiliuyuan.github.io/</link>
+    <description>Recent content on 十六源</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 11 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://shiliuyuan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git工作流总结</title>
+      <link>https://shiliuyuan.github.io/post/technology/2024/2024-09-11-git%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Wed, 11 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>https://shiliuyuan.github.io/post/technology/2024/2024-09-11-git%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%80%BB%E7%BB%93/</guid>
+      <description>&lt;p&gt;程序员在社会工作中，经常需要进行版本控制，对比不同版本的代码变更内容等操作。这个时候就需要用到版本控制工具Git,如何利用Git进行更有效的版本控制，确保代码的版本控制清晰，多人合作时候能够更好的解决冲突，是一个值得思考的问题。&lt;/p&gt;&#xA;&lt;p&gt;鉴于此，诞生了多种多样的Git工作流，程序员可以使用其中一种或者多种流程的组合作为一种自身或项目的提交规范，从而保证项目的稳定变更。下面将介绍几种主要的Git工作流。工作流仅作为一个基准，用于参考其设计思想，实际使用场景中可以多个工作流组合使用，也可以自由添加或者减少流程，但要注意，最好是制定一个统一的标准，团队中每个人都采用统一的工作流程，这样代码管理才不容易混乱。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>从零开始玩转数据结构——顺序表</title>
+      <link>https://shiliuyuan.github.io/post/technology/2024/2024-09-07-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%A1%BA%E5%BA%8F%E8%A1%A8/</link>
+      <pubDate>Sat, 07 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>https://shiliuyuan.github.io/post/technology/2024/2024-09-07-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%A1%BA%E5%BA%8F%E8%A1%A8/</guid>
+      <description>&lt;p&gt;大家好，本系列文章将记录博主关于数据结构（C语言实现版）的开发学习之旅，其中包括但不限于用顺序表、栈、队列、树的理论分析和实现。欢迎各位评论交流、相互学习！&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>通用Makefile文件编写</title>
+      <link>https://shiliuyuan.github.io/post/technology/2024/2024-09-06-%E9%80%9A%E7%94%A8makefile%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99/</link>
+      <pubDate>Fri, 06 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>https://shiliuyuan.github.io/post/technology/2024/2024-09-06-%E9%80%9A%E7%94%A8makefile%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99/</guid>
+      <description>&lt;p&gt;在学习嵌入式C语言的过程中，往往使用source insight之类的文本编辑工具编辑代码，再使用makefile进行编译，此时对于多级目录的情况，查阅资料发现网上很少有清晰的教程来写一份清晰的makefile问题，因此总结作为记录。备注：此makefile文件可以嵌入vscode进行使用。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>进程、线程和协程</title>
+      <link>https://shiliuyuan.github.io/post/technology/2022/2022-07-04-%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%8D%8F%E7%A8%8B/</link>
+      <pubDate>Mon, 04 Jul 2022 00:00:00 +0000</pubDate>
+      <guid>https://shiliuyuan.github.io/post/technology/2022/2022-07-04-%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%8D%8F%E7%A8%8B/</guid>
+      <description>&lt;p&gt;介绍进程、线程和协程之间的区别和联系。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>关于十六源</title>
+      <link>https://shiliuyuan.github.io/about/</link>
+      <pubDate>Wed, 29 Jun 2022 00:00:00 +0000</pubDate>
+      <guid>https://shiliuyuan.github.io/about/</guid>
+      <description>&lt;h1 id=&#34;关于我&#34;&gt;关于我&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;分享生活和科研的日常。&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;研究方向：&#xA;&lt;ul&gt;&#xA;&lt;li&gt;计算机科学/视觉&lt;/li&gt;&#xA;&lt;li&gt;小样本学习/元学习目标检测&lt;/li&gt;&#xA;&lt;li&gt;嵌入式学习/电池管理系统(BMS)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;兴趣方向：&#xA;&lt;ul&gt;&#xA;&lt;li&gt;后端开发&lt;/li&gt;&#xA;&lt;li&gt;前端开发&lt;/li&gt;&#xA;&lt;li&gt;嵌入式开发&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;使用语言：&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Python&lt;/li&gt;&#xA;&lt;li&gt;LaTeX&lt;/li&gt;&#xA;&lt;li&gt;HTML&lt;/li&gt;&#xA;&lt;li&gt;C&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;联系方式&#xA;&lt;ul&gt;&#xA;&lt;li&gt;QQ：3320065001&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h1 id=&#34;友链&#34;&gt;友链&lt;/h1&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://abcdhope.github.io/&#34;&gt;abcdhope的博客&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

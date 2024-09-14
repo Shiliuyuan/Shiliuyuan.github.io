@@ -1,0 +1,127 @@
+<search>
+    
+     <entry>
+        <title>Git工作流总结</title>
+        <url>https://shiliuyuan.github.io/post/technology/2024/2024-09-11-git%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%80%BB%E7%BB%93/</url>
+        <categories>
+          <category>杂记</category>
+        </categories>
+        <tags>
+          <tag>工具</tag><tag>Git</tag>
+        </tags>
+        <content type="html"> 程序员在社会工作中，经常需要进行版本控制，对比不同版本的代码变更内容等操作。这个时候就需要用到版本控制工具Git,如何利用Git进行更有效的版本控制，确保代码的版本控制清晰，多人合作时候能够更好的解决冲突，是一个值得思考的问题。
+鉴于此，诞生了多种多样的Git工作流，程序员可以使用其中一种或者多种流程的组合作为一种自身或项目的提交规范，从而保证项目的稳定变更。下面将介绍几种主要的Git工作流。工作流仅作为一个基准，用于参考其设计思想，实际使用场景中可以多个工作流组合使用，也可以自由添加或者减少流程，但要注意，最好是制定一个统一的标准，团队中每个人都采用统一的工作流程，这样代码管理才不容易混乱。
+GitFlow 介绍 GitFlow是最早诞生，也是最广泛采用的Git工作流程。
+GitFlow的核心是分支，其核心在于对不同的分支进行不同的操作（包括但不限于创建分支、拉取分支，切换分支、合并分支、解决冲突等）来进行多人高效的开发，GitFlow模型中定义了两个主分支(master、develop)和若干辅助分支(feature1,release1,hotfix1,bugfix)。其工作流程如下
+其中，两个主分支需要长期维护，辅助分支则在其功能完成后销毁。
+主分支只能通过其它分支合并进行操作，可通过Git设置其对应的权限，两个主分支的作用分别如下：
+Master分支：经过测试后长期稳定发布的版本，用于对外发布正式版软件使用的代码，可借助tags标记版本号
+Develop分支：开发分支，用于让开发人员进行快速迭代代码，存储不稳定版本的代码
+辅助分支则多为程序员本地操作后直接commit的分支，每个程序员都可以直接创建，用于一个阶段性的事务，各种辅助分支的作用如下：
+Feature分支：用于项目新版本功能的开发，其往往只是作为一个前缀，为使得分支管理更加清晰，可规定其命名规范（如Feature_开发者名称_功能名称)
+Release分支：作为Develop分支迭代一段时间后，希望发布新版本之前的预发布版本，用于提供给测试人员测试，其测试过程中可进行少量的变更开发和问题修复，测试且修复完成后的稳定版本则合并到Master分支
+HotFix分支：用于修复正式发布版本中的问题，紧急的问题修复可直接合并到Master分支，非紧急的问题修复则合并到Develop分支，在下一版本的代码中修复
+总结 GitFlow为版本控制提供了一种思路，其优缺点都很明显。
+优点：代码流程清晰可控，通过对不同分支的权限管控，可以有效保证发布代码的稳定性。
+缺点：流程过于复杂，需要长期维护两个分支，且需要经常在不同的分支之间切换，操作成本较高。
+鉴于此，GitFlow适合对稳定性追求极高且开发周期较长的项目（通常为一个版本软件的发布），对于开发周期较短的项目则维护成本过高（分支操作过于频繁）。
+GitHubFlow 介绍 为了适应变更更为频繁的项目（持续发布，如网站的开发），GitHub网站诞生了一种新型的工作流。
+其流程如下：
+其流程为：
+第一步：根据需求，从master拉出新分支，不区分功能分支或补丁分支。 第二步：新分支开发完成后，或者需要讨论的时候，就向master发起一个pull request（简称PR）。 第三步：Pull Request既是一个通知，让别人注意到你的请求，又是一种对话机制，大家一起评审和讨论你的代码（Comment）。对话过程中，你还可以不断提交代码。 第四步：你的Pull Request被接受，合并进master，重新部署后，原来你拉出来的那个分支就被删除。（先部署再合并也可。） 总结 GitHubFlow大幅简化了GitFlow流程，使得其更适合即时开发流程，其优缺点如下：
+优点：流程更加简单，无需不停切换分支，操作更容易
+缺点：只有一个主分支，提交审核即通过，无有效的版本控制缓冲区域，不适合多版本控制的软件开发
+GitlabFlow 介绍 GitLabFlow总结了GitFlow和GitHubFlow的优缺点，创建了一种新型的Git工作流，其核心思想是上游优先。其含义为像水流一样只能由上游的分支合并到下游的分支，大部分情况下都是相邻分支合并，特殊情况下可以跨分支合并。
+其核心流程如下：
+该工作流存在一个Master分支，用于快速迭代开发代码 在测试阶段，可将Master中的代码发布到预发布分支进行测试，测试出的问题由Master分支解决后再次同步到预发布分支中进行复测，直到代码版本稳定后发布到稳定版分支上。 从稳定的预发布分支中拉出一个分支，用于保存该稳定版本，后续每产生一个新的版本，则使用Chery-Pick摘取相应的变更。 云仓库只长期维护Master分支，正式发布分支；Feature分支，BugFix分支等完成后合并到Master分支后再合并到稳定版分支 总结 优点：GitLabFlow工作流整合了GitFlow和GitHubFlow的特性，采取“折中的策略”，每个版本生成一个分支，适合多版本软件同时维护的状况。
+缺点：对开发人员的能力提出了更高的要求，当存在多产品线时，版本维护效果较差。
+个人使用 个人在工作中则习惯性采用GitLab工作流，但有时候又需要长期维护诸多不同的版本，在GitLab工作流的基础上，增加了新的特性，即每一个稳定版本增加一个新的分支，从而能够在不同的分支上维护不同版本的软件，且保留每一个版本代码的变更内容。其流程如下：
+该流程相比GitLab流程仅多了从前一个发布版本拉出一个新的分支的过程，每个版本存在一个独立的分支。
+优点：方便多版本软件的维护（不过这种场景较少，相当于产生了多个分叉的软件，一般新版本更新后旧版本软件便不再需要迭代，因此实际应用中通常GitLab工作流就足够使用了）
+缺点：维护成本较大，会产生较多的分支，对开发人员能力要求比较高，需要熟悉多个版本的软件。
+参考：
+https://www.cnblogs.com/xiaoqi/p/gitlab-flow.html
+https://gitlab.cn/docs/jh/topics/gitlab_flow.html
+https://cloud.tencent.com/developer/article/1646937
+https://www.ruanyifeng.com/blog/2015/12/git-workflow.html
+</content>
+    </entry>
+    
+     <entry>
+        <title>从零开始玩转数据结构——顺序表</title>
+        <url>https://shiliuyuan.github.io/post/technology/2024/2024-09-07-%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E9%A1%BA%E5%BA%8F%E8%A1%A8/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>数据结构</tag>
+        </tags>
+        <content type="html"> 大家好，本系列文章将记录博主关于数据结构（C语言实现版）的开发学习之旅，其中包括但不限于用顺序表、栈、队列、树的理论分析和实现。欢迎各位评论交流、相互学习！
+线性表简介 线性表是最简单的一种数据结构，也是其它线性结构如栈、队列的基础。
+线性表的存储方式 线性表的存储结构分为顺序存储和链式存储。其中顺序存储结构查找和修改效率较高，但其插入和删除效率在大多数情况下不如链式存储结构。
+线性表的实现及操作 构造线性表 判断线性表是否为空 判断线性表是否已满 向线性表中插入数据 头插 尾插 指定位置插入（包含头插和尾插） 从线性表中取出（删除）元素 尾部取出 指定位置取出 查询线性表中指定位置的元素 修改线性表中指定位置的元素 清空线性表 打印线性表 线性表的实现-顺序存储 顾名思义，顺序存储的线性表在内存中所使用的空间是连续的，因此相较于链式存储，其占用内存更少，多用于数据查询比较频繁或者内存有限的场景。
+在设计实现前，首先要规划实现方案，我个人比较喜欢参数和逻辑进行分离，且头文件的导入都在.c文件中实现的思路。那就先定义配置文件Define.h如下：
+#ifndef __DEFINE__#define __DEFINE__#include&lt;stdlib.h&gt;#include&lt;stdio.h&gt;#include &lt;stdbool.h&gt;// 最大长度，暂时可复用在各种数据结构的学习中#define MAXSIZE 10typedef int datatype;	//重定义数据数据类型，方便直接切换数据表的数据类型#endif然后定义线性表的逻辑实现，这里先实现顺序存储的线性表，其头文件seqlist.h定义如下：
+#ifndef __SEQLIST__#define __SEQLIST__#include &quot;Define.h&quot;typedef int data_t;typedef struct Test{/* data */data_t data[MAXSIZE];int last;}seqlist_t, *seqlink_t;// 创建extern seqlist_t *create_seqlist(void);// 获取长度extern int get_length_seqlist(seqlist_t *L);// 判空extern int is_empty_seqlist(seqlist_t *L);// 判满extern int is_full_seqlist(seqlist_t *L);// 插入数据extern int insert_seqlist(seqlist_t *L, data_t x, int pos);// 删除数据extern int delete_seqlist(seqlist_t *L,int pos);// 修改指定位置的数据extern int change_seqlist(seqlist_t *L,data_t x, int pos);// 查extern int search_seqlist(seqlist_t *L, data_t x);// 清空（释放顺序表）extern void clear_seqlist(seqlist_t *L);// 置空（顺序表中所有元素置为0）extern void set_empty_seqlist(seqlist_t *L);// 打印线性表extern void show_seqlist(seqlist_t *L);#endif然后在seqlist.c依次实现头文件中定义的函数如下：
+#include&quot;seqlist.h&quot;// 创建seqlist_t *create_seqlist(void){seqlist_t *L=NULL;L = (seqlist_t *)malloc(sizeof(seqlist_t));if(L==NULL){puts(&quot;no memory&quot;);L = NULL;}L-&gt;last = -1;return L;}// 获取长度int get_length_seqlist(seqlist_t *L){int Temp;if(L==NULL){puts(&quot;seqlist_t *L is NULL&quot;);Temp = -1;}else{Temp = L-&gt;last + 1;}return Temp;}// 判空int is_empty_seqlist(seqlist_t *L){int Temp;if(L==NULL){puts(&quot;seqlist_t *L is NULL&quot;);Temp = -1;}else{Temp = (L-&gt;last == -1);}return Temp;}// 判满int is_full_seqlist(seqlist_t *L){int Temp;if(L==NULL){puts(&quot;seqlist_t *L is NULL&quot;);Temp = -1;}else{Temp = (L-&gt;last == MAXSIZE - 1);}return Temp;}// 增int insert_seqlist(seqlist_t *L, data_t x, int pos){int Temp = 0;int i = 0;if(L==NULL){puts(&quot;seqlist_t *L is NULL&quot;);Temp = -1;}else if ((is_full_seqlist(L)) || (pos &lt; 0) || (pos &gt; L-&gt;last + 1)){puts(&quot;input argv is invalid&quot;);Temp = -1;}else{for(i=L-&gt;last; i &gt;=pos; i--){L-&gt;data[i+1]=L-&gt;data[i];}L-&gt;data[pos] = x;L-&gt;last++;Temp = 1;}return Temp;}// 删int delete_seqlist(seqlist_t *L,int pos){int Temp = 0;int i = 0;if(L==NULL){puts(&quot;seqlist_t *L is NULL&quot;);Temp = -1;}else if (pos &lt; 0 || pos &gt; L-&gt;last){puts(&quot;input argv is invalid&quot;);Temp = -1;}else{for(i=pos; i&lt;=L-&gt;last;i++){L-&gt;data[i] = L-&gt;data[i+1];}Temp = 1;}L-&gt;last--;return Temp;}// 改int change_seqlist(seqlist_t *L,data_t x, int pos){int Temp = 0;if(L==NULL){puts(&quot;seqlist_t *L is NULL&quot;);Temp = -1;}else if ((pos &lt; 0) || (pos &gt; L-&gt;last + 1)){puts(&quot;input argv is invalid&quot;);Temp = -1;}else{L-&gt;data[pos] = x;Temp = 1;}return Temp;}// 查int search_seqlist(seqlist_t *L, data_t x){int Temp = 0;int i = 0;if(L==NULL){puts(&quot;seqlist_t *L is NULL&quot;);Temp = -1;}else{for(i=0; i&lt;=L-&gt;last;i++){if((L-&gt;data[i]==x)&amp;&amp;(Temp!=i)){Temp = i;}}}return Temp;}// 清空void clear_seqlist(seqlist_t *L){if(L==NULL){puts(&quot;seqlist_t *L is NULL&quot;);}else{set_empty_seqlist(L);free(L);L=NULL;}}// 置空void set_empty_seqlist(seqlist_t *L){if(L==NULL){puts(&quot;seqlist_t *L is NULL&quot;);}else{L-&gt;last = -1;}}// 展示序列void show_seqlist(seqlist_t *L){int i = 0;if(L==NULL){puts(&quot;seqlist_t *L is NULL&quot;);}else{for(i=0;i&lt;=L-&gt;last;i++){printf(&quot;L-&gt;data[%d]=%d\n&quot;,i,L-&gt;data[i]);}}}线性表的实现-链式存储 前面已经对线性表的顺序存储的创建和操作做了一些总结，接下来介绍另一种采用更加灵活的存储方式的线性表，链式存储的顺序表。
+同样的采用线性存储时候使用的配置文件Define.h，这里不做重复说明。接下来定义链式存储的头文件linklist.h。
+#ifndef _LINKLIST_H_#define _LINKLIST_H_#include &quot;Define.h&quot;typedef struct node{datatype data;struct node * next;}listnode, *linklist;// 链式表的创建extern linklist list_create();// 通过输入键盘创建链表extern linklist list_create_from_key();// 头插元素extern int list_head_insert(linklist H, datatype value);// 按指定位置插入元素extern int list_insert(linklist H, int pos, datatype value);// 查询指定位置的元素extern linklist list_get(linklist H, int pos);// 查询指定元素的位置extern linklist list_locate(linklist H, datatype value);// 删除指定位置的元素extern int list_delete(linklist H, int pos);// 翻转链表extern void list_reverse(linklist H);// 在顺序表中按顺序插入元素extern int list_order_insert(linklist H, datatype value);// 排序链表extern void list_sort(linklist H);// 打印链表extern void list_show(linklist H);#endif下面来实现每一个函数
+#include&quot;linklist.h&quot;#include&lt;stdio.h&gt;#include&lt;stdlib.h&gt;linklist list_create(){linklist H;if((H=(linklist)malloc(sizeof(listnode)))==NULL){printf(&quot;malloc failedd\n&quot;);return H;}H-&gt;data = 0;H-&gt;next = NULL;return H;}void list_show(linklist H){while (H-&gt;next!=NULL){printf(&quot;%d &quot;, H-&gt;next-&gt;data);H = H-&gt;next;}printf(&quot;打印完成\n&quot;);}int list_head_insert(linklist H, datatype value){linklist p;if((p=(linklist)malloc(sizeof(listnode)))==NULL){printf(&quot;malloc failedd\n&quot;);return -1;}p-&gt;data = value;p-&gt;next = H-&gt;next;H-&gt;next = p;return 0;}linklist list_create_from_key(){linklist H, r, p;datatype value;if((H=(linklist)malloc(sizeof(listnode)))==NULL){printf(&quot;malloc failedd\n&quot;);return H;}H-&gt;data = 0;H-&gt;next = NULL;r = H;while (1){printf(&quot;input a value(-1 exit):&quot;);scanf(&quot;%d&quot;, &amp;value);if(value == -1){break;}if((p=(linklist)malloc(sizeof(listnode)))==NULL){printf(&quot;malloc failedd\n&quot;);return H;}p-&gt;data = value;p-&gt;next = NULL;r-&gt;next = p;r = p;}return H;}linklist list_get(linklist H, int pos){linklist p = H;int i = -1;if(pos &lt; 0){printf(&quot;position is vaild\n&quot;);return NULL;}while (p-&gt;next &amp;&amp; i &lt; pos){p = p-&gt;next;i++;}if(i == pos){return p;}else{printf(&quot;position is vaild\n&quot;);return NULL;}}linklist list_locate(linklist H, datatype value){linklist p = H-&gt;next;while (p &amp;&amp; p-&gt;data != value){p = p-&gt;next;}return p;}int list_insert(linklist H, int pos, datatype value){linklist p, q;if(pos == 0){p = H;}else{p = list_get(H, pos-1);}if(p == NULL){printf(&quot;para is invaild\n&quot;);return -1;}else{if((q = (linklist)malloc(sizeof(listnode))) == NULL){printf(&quot;malloc faild\n&quot;);return -1;}q-&gt;data = value;q-&gt;next = p-&gt;next;p-&gt;next = q;return 0;}}int list_delete(linklist H, int pos){linklist p,q;if(pos == 0){p = H;}else{p = list_get(H, pos-1);}if((p==NULL)||(p-&gt;next==NULL)){printf(&quot;Para is Vaild\n&quot;);return -1;}else{q = p-&gt;next;p-&gt;next = q-&gt;next;free(q);q = NULL;return 0;}}void list_reverse(linklist H){linklist p, q;p = H-&gt;next;H-&gt;next = NULL;while (p!=NULL){q = p;p = p-&gt;next;q-&gt;next = H-&gt;next;H-&gt;next = q;}}int list_order_insert(linklist H, datatype value){linklist p, q;if((p = (linklist)malloc(sizeof(listnode))) == NULL){printf(&quot;malloc faild\n&quot;);return -1;}p-&gt;data = value;q = H;while ((q-&gt;next!=NULL)&amp;&amp;(q-&gt;next-&gt;data &lt; value)){q = q-&gt;next;}p-&gt;next = q-&gt;next;q-&gt;next = p;return 0;}void list_sort(linklist H){linklist p;p = H-&gt;next;H-&gt;next = NULL;while (p!=NULL){list_order_insert(H, p-&gt;data);p = p-&gt;next;}}总结 通过对顺序表的初步学习，能够更好的了解数据的存储方式和数据的操作，对其他数据结构的学习帮助较大。
+</content>
+    </entry>
+    
+     <entry>
+        <title>通用Makefile文件编写</title>
+        <url>https://shiliuyuan.github.io/post/technology/2024/2024-09-06-%E9%80%9A%E7%94%A8makefile%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99/</url>
+        <categories>
+          <category>杂记</category>
+        </categories>
+        <tags>
+          <tag>工具</tag>
+        </tags>
+        <content type="html"> 在学习嵌入式C语言的过程中，往往使用source insight之类的文本编辑工具编辑代码，再使用makefile进行编译，此时对于多级目录的情况，查阅资料发现网上很少有清晰的教程来写一份清晰的makefile问题，因此总结作为记录。备注：此makefile文件可以嵌入vscode进行使用。
+Makefile的通用文件设计思路采用了逻辑与配置分离的思想，其编译主要逻辑存放于Makefile文件中，配置路径相关问题存放于makefile.defines.mk文件中。每次新增含有头文件的文件夹和.c文件时，Makefile文件本身的逻辑部分无需变动，只需在makefile.defines.mk文件中添加相应内容即可。
+现有一项目路径如下：
+└── src ├── LinkList │ ├── linklist.c │ └── linklist.h ├── main.c 则配置makefile.defines.mk文件如下：
+Target = target #生成目标文件名称 BINPATH = bin	#目标文件存放目录 SRCPATH = src #源文件存放目录 OBJPATH = obj	#编译过程文件存放目录 ADDSOURCE = ADDINCLUDE = ADDINCLUDE += src	#注意等号右边的空格不能少 ADDINCLUDE += src/LinkList ADDSOURCE += src/main.c ADDSOURCE += src/LinkList/linklist.c 当新增目录或.c文件时候，是需要在ADDINCLUDE和ADDSOURCE中添加对应路径即可。
+下面来介绍Makefile逻辑部分（只实现了最基础的功能，供学习使用，后续可以在上面增加其它Makefile功能）
+.DEFAULT_GOAL := default	#设置默认编译指令即Makefile时候运行的目标 .PHONY : default build-debug	#伪目标，防止与文件名冲突 default:all	#默认执行all目标 all:build run build-debug:build ADDINCLUDE_U := $(addprefix -I, $(ADDINCLUDE))	#展开头文件目录，并在上面添加-I CC := gcc	#编译器 CFLAGS := -g -Wunused-variable $(ADDINCLUDE_U)	#编译指令 DEPNEDFLAGS := -MM -MP -MT -nostdinc $(ADDINCLUDE_U) #生成.o文件编译指令 OBJFILES := $(patsubst %.c,%.o,$(patsubst $(SRCPATH)/%,$(OBJPATH)/%,$(ADDSOURCE)))	#替换.c为.o作为目标文件 OBJPATHS := $(dir $(OBJFILES))	#判断.c文件存放的目录有哪些 .PHONY : build build:$(Target) $(Target): $(OBJFILES) $(dir $(OBJFILES))/.dirstamp $(BINPATH)/.dirstamp	#链接.o文件调用创建目录指令 @$(CC) $(CFLAGS) $(OBJFILES) -o $(BINPATH)/$@	#链接.o文件 .SECONDEXPANSION: $(OBJPATH)/%.o:$(SRCPATH)/%.c $$(dir $(OBJPATH)/%).dirstamp	#将所有的.c文件生成.o文件，放在对应的文件夹内 @$(CC) $(DEPNEDFLAGS) $&lt; -MF $(@:.o=.d)	#生成.d文件，存放每个文件依赖的头文件 @$(CC) $(CFLAGS) -c $&lt; -o $@	#生成.o文件 %.dirstamp: @mkdir -p $(@D) .PHONY : run clean run: $(BINPATH)/$(Target)	#运行可执行文件 @./$&lt; clean:	#清除创建的文件夹 @rm -rf $(OBJPATH) $(BINPATH) 以上为一个简易的通用Makefile框架，可以在服务器或者嵌入式领域的集成开发环境有限的情况下，做简易的学习开发使用。
+</content>
+    </entry>
+    
+     <entry>
+        <title>进程、线程和协程</title>
+        <url>https://shiliuyuan.github.io/post/technology/2022/2022-07-04-%E7%BA%BF%E7%A8%8B%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%8D%8F%E7%A8%8B/</url>
+        <categories>
+          <category>技术</category>
+        </categories>
+        <tags>
+          <tag>理论</tag><tag>操作系统</tag>
+        </tags>
+        <content type="html"> 介绍进程、线程和协程之间的区别和联系。
+并发与并行 介绍进程、线程之前需要先了解并发与并行的概念。
+我们都知道，计算机的核心是CPU，就像人的大脑一样，它承担了所有的计算任务；而操作系统是计算机的管理者，类似人的思想，它负责任务的调度、资源的分配和管理，统领整个计算机硬件；应用程度则是具有每种功能的程序，类似于人的能力和技能，程度是运行于操作系统之上的。
+了解了计算机的基础工作原理后再来介绍并发与并行的概念。
+并发：再操作系统中，某一个时间段，几个程序可以再同一个CPU上运行（因为计算机的切换周期很短，因此可以看作宏观层面上的同时运行），但在任意一个时间点上，只有一个程序在CPU上运行。
+即也就是正常人一个时间点只能去做一件事。但可以选择一天做两件事，比如上7点学数学、8点学英语、9点继续学数学….如此循环，但按照天这个单位计时的时候，那么就是你一天同时做了两件事。
+并行：当操作系统有多个CPU时候，就是人类的一个小团队，一个CPU处理A线程，另一个处理B线程，两个线程互不抢占CPU资源，可以同时进行，这种方式称为并行。也就是一个团队里，人员A负责社会调研，人员B负责查找资料…，每个人可以同一时间做不同的事，称为并行。
+图示如下：
+其中事件A和事件B是并发、事件C和事件D是并发；事件A和事件C是并行、事件B和事件D是并行。
+进程 进程是操作系统进行资源分配和调度的一个基本单位。我们的程度是一个二进制的可执行文件，运行这个可执行文件后，它会被装载到内存中，接着CPU会执行程序中的每一条执行，那么这个运行中的程序，被称为进程。
+多进程实际上是一种并发操作，接下来我们将上面的处理器核1的整条线路换一种画法，就会更加直观。
+上图所示的进程1与进程2是在同一块处理器核心上执行，进程1对应的是事件A，也即程序A，进程2对应的是事件B，也就是程序B。由于计算机交替执行的速度非常快，因此我们会有一种多个程序并行的错觉。实际上是并发。
+线程 线程是进程的子任务，是CPU调度和分派的基本单位，用于保证程序的实时性，实现进程内部的并发；线程是操作系统可识别的最小执行和调度单位。每个线程都独自占用一个虚拟处理器；独自的寄存器组，指令计数器和处理器状态。每个线程完成不同的任务。但是共享同一地址空间，打开的文件队列和其它的内核资源。
+简单的说，进程就是你正在做的事，一次只能做一件事。线程则是你运行大脑，小脑等大脑部件。它们共享一块大脑，但各自又分工不同，协同完成同一任务。如下图：
+协程 协程则是更小的单位，是一种基于线程之上的更加轻量级的存在，这种由程序员自己写程序来管理的轻量级线程叫做【用户空间线程】。一个线程可以有多个协程。
+协程的特点
+线程的切换由操作系统负责调度，协程由用户自己进行调度，因此减少了上下文切换，提高了效率。 线程的默认Stack大小是1M，而协程更轻量，接近1K。因此可以在相同的内存中开启更多的协程。 由于在同一个线程上，因此可以避免竞争关系而使用锁。 适用于被阻塞的，且需要大量并发的场景。但不适用于大量计算的多线程，遇到此种情况，更好实用线程去解决。 线程、协程、进程之间的包含关系图如下：
+此外，操作系统还提供了各进程、各线程、个协程之间的信息交换管理机制。如锁、通道等，暂时未作详细了解，后续单开文章叙述。
+总结 操作系统的设计，因此可以归纳为以下三点：
+以多进程的形式，允许多个任务同时运行。（单核CPU内为并发是伪同时） 以多线程的形式，将一个任务拆分成不同的子任务运行。 提供了一种程序员可管理的更小的单位协程。加速信息间的传输和交换。同时更充分利用计算机资源。 提供了各种机制间的管理和交换机制。保证系统的正常运行。 参考：
+https://www.cnblogs.com/Survivalist/p/11527949.html
+https://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html
+https://www.zhihu.com/question/44087187/answer/2062919643
+</content>
+    </entry>
+    
+</search>
