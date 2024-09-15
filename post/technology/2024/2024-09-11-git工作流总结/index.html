@@ -144,7 +144,7 @@
     <i class="fa fa-eye"></i>
 </span>
 <span class="post-meta-item-text">阅读：</span>
-<span class="leancloud-visitors-count">2377 字 ~5分钟</span>
+<span class="leancloud-visitors-count">2624 字 ~6分钟</span>
 </span>
       
       </div>
@@ -199,6 +199,15 @@
 <h3 id="gitlabflow">GitlabFlow</h3>
 <h4 id="介绍-2">介绍</h4>
 <p>GitLabFlow总结了GitFlow和GitHubFlow的优缺点，创建了一种新型的Git工作流，其核心思想是上游优先。其含义为像水流一样只能由上游的分支合并到下游的分支，大部分情况下都是相邻分支合并，特殊情况下可以跨分支合并。</p>
+<p><img src="https://shiliuyuan.github.io/post/technology/2024/images/2024-09-11-Git%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%80%BB%E7%BB%93/%E7%BB%98%E5%9B%BE4.png" alt="绘图4"></p>
+<p>其核心流程如下：</p>
+<ol>
+<li>该工作流存在一个Master分支，用于快速迭代开发代码</li>
+<li>在测试阶段，可将Master中的代码发布到<strong>预发布分支</strong>进行测试，测试出的问题由Master分支解决后再次同步到<strong>预发布分支</strong>中进行复测，直到代码版本稳定后发布到稳定版分支上。</li>
+<li>从稳定的<strong>预发布分支</strong>中拉出一个分支，用于保存该稳定版本，后续每产生一个新的版本，则拉出一个新的分支。</li>
+<li>云仓库只长期维护<strong>Master分支</strong>，<strong>正式发布分支</strong>；Feature分支，BugFix分支等完成后合并到Master分支后再合并到<strong>稳定版分支</strong></li>
+</ol>
+<p>GitLabFlow的两种变种：</p>
 <p><img src="https://shiliuyuan.github.io/post/technology/2024/images/2024-09-11-Git%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%80%BB%E7%BB%93/%E7%BB%98%E5%9B%BE2-1726233603462-41.png" alt="绘图2"></p>
 <p>其核心流程如下：</p>
 <ol>
@@ -212,7 +221,6 @@
 <p>优点：GitLabFlow工作流整合了GitFlow和GitHubFlow的特性，采取“折中的策略”，每个版本生成一个分支，适合多版本软件同时维护的状况。</p>
 <p>缺点：对开发人员的能力提出了更高的要求，当存在多产品线时，版本维护效果较差。</p>
 </blockquote>
-<h3 id="个人使用">个人使用</h3>
 <p>个人在工作中则习惯性采用GitLab工作流，但有时候又需要长期维护诸多不同的版本，在GitLab工作流的基础上，增加了新的特性，即每一个稳定版本增加一个新的分支，从而能够在不同的分支上维护不同版本的软件，且保留每一个版本代码的变更内容。其流程如下：</p>
 <p><img src="https://shiliuyuan.github.io/post/technology/2024/images/2024-09-11-Git%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%80%BB%E7%BB%93/%E7%BB%98%E5%9B%BE3.png" alt="绘图3"></p>
 <p>该流程相比GitLab流程仅多了从前一个发布版本拉出一个新的分支的过程，每个版本存在一个独立的分支。</p>
@@ -395,7 +403,6 @@
             <li><a href="#gitflow">GitFlow</a></li>
             <li><a href="#githubflow">GitHubFlow</a></li>
             <li><a href="#gitlabflow">GitlabFlow</a></li>
-            <li><a href="#个人使用">个人使用</a></li>
           </ul>
         </li>
       </ul>
